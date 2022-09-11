@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+    <title>File Uploader</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,600;8..144,700&display=swap" rel="stylesheet">
+
+    <style>
+
+       .preview {
+            width: 300px;
+            height: 300px;
+            margin-top: 30px;
+            display: flex;
+            background-repeat: no-repeat;
+            background-size: contain;
+       }
+
+       .preview_class {
+            width: 100px;
+            margin-right: 10px;
+       }
+        
+    </style>
+</head>
+
+<body>
+
+    <input onchange="preview_file(event)" type="file" id="file_input" multiple>
+    <div class="preview" id="display_file"></div>
+   
+    <script>
+
+        let img = document.getElementById("display_file");
+
+        let icons_url = {
+            'xls' : 'https://img.icons8.com/color/48/000000/ms-excel.png',
+            'pdf' : 'https://img.icons8.com/color/50/000000/pdf.png',
+            'doc' : 'https://img.icons8.com/color/48/000000/word.png',
+            'xlsx' : 'https://img.icons8.com/color/48/000000/ms-excel.png',
+            'pdf' : 'https://img.icons8.com/color/50/000000/pdf.png',
+            'docx' : 'https://img.icons8.com/color/48/000000/word.png',
+        };
+
+        function get_extenstion( file ){
+            return file.name.split( "." )[1];
+        }
+     
+        function preview_file(e) {
+            let file = e.target;
+            let files = file.files;
+
+            let objurl = null; extension=null;
+
+            if(files.length) {
+                img.innerHTML = "";
+                for(let index in files) {
+                        if(files[index] instanceof File) {
+
+                        extension = get_extenstion( files[index] );
+                        objurl = ( icons_url[extension] )? icons_url[extension]:  URL.createObjectURL( files[index] );
+
+                        image_viewer = document.createElement('div');
+                        image_viewer.innerHTML = `<img src="${objurl}" class="preview_class"/>`;
+                        img.appendChild(image_viewer);
+                    }
+                }
+            }
+        }
+    
+    </script>
+</body>
+</html>
