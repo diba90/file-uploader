@@ -26,7 +26,7 @@ app.post(
   upload.array("file_lists", 10),
   function (req, res, next) {
     if (req.files) {
-      res.sendFile("index.html");
+      res.sendFile(path.join(__dirname + "/index.html"));
     }
   }
 );
